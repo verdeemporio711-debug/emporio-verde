@@ -2,58 +2,126 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Empório Verde</title>
+  <title>Quiz Empório Verde</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(135deg, #e8f5e9, #ffffff);
+      font-family: Arial, sans-serif;
+      background: #eef6ee;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      margin: 0;
     }
-    .card {
-      background: #ffffff;
-      padding: 32px;
-      border-radius: 16px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-      text-align: center;
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
       max-width: 420px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
     h1 {
+      text-align: center;
       color: #2e7d32;
-      margin-bottom: 8px;
     }
-    p {
-      color: #555;
-      margin-bottom: 24px;
-    }
-    a.botao {
-      display: inline-block;
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
       background: #2e7d32;
       color: #fff;
-      padding: 14px 28px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
+      font-size: 16px;
+      cursor: pointer;
     }
-    a.botao:hover {
-      background: #1b5e20;
+    button:hover {
+      background: #256428;
+    }
+    .option {
+      background: #f1f8f1;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .option:hover {
+      background: #dceddc;
+    }
+    .result {
+      text-align: center;
+      font-size: 18px;
+      color: #2e7d32;
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h1>Empório Verde 🌿</h1>
-    <p>Espalhando o verde pelo Vale do Paraíba e Região desde 2004</p>
-    <a class="botao" href="#" target="_blank">
-      Acessar conteúdo
-    </a>
-  </div>
+<div class="container" id="quiz">
+  <h1>🌿 Quiz Empório Verde</h1>
+  <p id="question"></p>
+  <div id="options"></div>
+</div>
+
+<script>
+  const quizData = [
+    {
+      question: "Para presentear uma amiga, qual opção é ideal?",
+      options: ["Arranjo de orquídea", "Terra vegetal", "Argila expandida"],
+      answer: 0
+    },
+    {
+      question: "Para pedido de namoro, o mais indicado é:",
+      options: ["Arranjo simples", "Buquê especial", "Vaso decorativo"],
+      answer: 1
+    },
+    {
+      question: "Para decorar a casa no Natal:",
+      options: ["Buquê romântico", "Arranjo natalino", "Substrato"],
+      answer: 1
+    }
+  ];
+
+  let current = 0;
+
+  const questionEl = document.getElementById("question");
+  const optionsEl = document.getElementById("options");
+
+  function loadQuestion() {
+    questionEl.textContent = quizData[current].question;
+    optionsEl.innerHTML = "";
+
+    quizData[current].options.forEach((opt, index) => {
+      const div = document.createElement("div");
+      div.className = "option";
+      div.textContent = opt;
+      div.onclick = () => nextQuestion(index);
+      optionsEl.appendChild(div);
+    });
+  }
+
+  function nextQuestion(index) {
+    current++;
+    if (current < quizData.length) {
+      loadQuestion();
+    } else {
+      showResult();
+    }
+  }
+
+  function showResult() {
+    document.getElementById("quiz").innerHTML = `
+      <div class="result">
+        💚 Obrigado por participar!<br><br>
+        Entre em contato com o Empório Verde para a melhor indicação 🌱
+      </div>
+    `;
+  }
+
+  loadQuestion();
+</script>
 
 </body>
 </html>
