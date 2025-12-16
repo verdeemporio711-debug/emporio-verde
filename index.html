@@ -1,63 +1,210 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Quiz Empório Verde</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #eef6ee;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .quiz {
-      background: #ffffff;
-      padding: 32px;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-    }
-
-    h1 {
-      color: #2e7d32;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 12px;
-      border: none;
-      border-radius: 8px;
-      background: #2e7d32;
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #256628;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Qual planta você seria?</title>
+<style>
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  background:linear-gradient(135deg,#e8f5ee,#f4f7f4);
+  margin:0;
+  padding:0;
+}
+.container{
+  max-width:650px;
+  margin:40px auto;
+  background:#ffffff;
+  padding:30px;
+  border-radius:14px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+h1{
+  text-align:center;
+  color:#2f6b4f;
+}
+.progress{
+  height:8px;
+  background:#e0e0e0;
+  border-radius:20px;
+  overflow:hidden;
+  margin:20px 0;
+}
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:#2f6b4f;
+  transition:width .4s ease;
+}
+.answers button{
+  display:block;
+  width:100%;
+  margin:10px 0;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:#e6f2ec;
+  cursor:pointer;
+  font-size:16px;
+}
+.answers button:hover{
+  background:#cfe8dd;
+}
+#result{
+  display:none;
+  text-align:center;
+}
+.whatsapp{
+  display:inline-block;
+  margin-top:20px;
+  padding:14px 22px;
+  background:#25D366;
+  color:#ffffff;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:bold;
+}
+.footer{
+  margin-top:25px;
+  font-size:13px;
+  color:#777;
+}
+</style>
 </head>
 <body>
 
-  <div class="quiz">
-    <h1>Quiz Empório Verde 🌿</h1>
+<div class="container">
+  <h1>🌿 Qual planta você seria?</h1>
 
-    <p>Para quem é o arranjo?</p>
-
-    <button onclick="alert('Arranjo para presente 🎁')">Presente</button>
-    <button onclick="alert('Arranjo decorativo 🏡')">Decoração</button>
-    <button onclick="alert('Arranjo para datas especiais 💚')">Data especial</button>
+  <div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
   </div>
+
+  <div id="quiz">
+    <p id="questionText"></p>
+    <div class="answers" id="answers"></div>
+  </div>
+
+  <div id="result">
+    <h2 id="plantTitle"></h2>
+    <p id="plantText"></p>
+    <a class="whatsapp" id="whatsLink" href="#" target="_blank">
+      Quero adquirir 🌱
+    </a>
+    <div class="footer">
+      Espalhando o verde pelo Vale do Paraíba e Região desde 2004 🌿
+    </div>
+  </div>
+</div>
+
+<script>
+const WHATS_NUMBER = "5512997125241";
+
+const quiz = [
+  {
+    question: "Como você se descreve?",
+    answers: [
+      { text: "Cheio de energia e presença", type: "dipladenia" },
+      { text: "Sensível e intenso", type: "lirio" },
+      { text: "Tranquilo e prático", type: "zamioculca" },
+      { text: "Elegante e exigente", type: "orquidea" }
+    ]
+  },
+  {
+    question: "Qual ambiente combina mais com você?",
+    answers: [
+      { text: "Sol pleno e espaços abertos", type: "dipladenia" },
+      { text: "Bem iluminado, sem sol direto", type: "lirio" },
+      { text: "Luz indireta e pouca interferência", type: "zamioculca" },
+      { text: "Iluminado e bem cuidado", type: "orquidea" }
+    ]
+  },
+  {
+    question: "Como você reage quando algo sai do controle?",
+    answers: [
+      { text: "Sigo firme, sou resistente", type: "dipladenia" },
+      { text: "Demonstro logo o problema", type: "lirio" },
+      { text: "Prefiro não me estressar", type: "zamioculca" },
+      { text: "Espero o momento certo", type: "orquidea" }
+    ]
+  },
+  {
+    question: "Como você prefere ser lembrado?",
+    answers: [
+      { text: "Chamativo e florido", type: "dipladenia" },
+      { text: "Expressivo e sensível", type: "lirio" },
+      { text: "Discreto e resistente", type: "zamioculca" },
+      { text: "Bonito e sofisticado", type: "orquidea" }
+    ]
+  }
+];
+
+let index = 0;
+let score = { dipladenia:0, lirio:0, zamioculca:0, orquidea:0 };
+
+function updateProgress(){
+  document.getElementById("progressBar").style.width =
+    (index / quiz.length) * 100 + "%";
+}
+
+function showQuestion(){
+  updateProgress();
+  document.getElementById("questionText").innerText = quiz[index].question;
+  const answersDiv = document.getElementById("answers");
+  answersDiv.innerHTML = "";
+  quiz[index].answers.forEach(a=>{
+    const btn = document.createElement("button");
+    btn.innerText = a.text;
+    btn.onclick = ()=>selectAnswer(a.type);
+    answersDiv.appendChild(btn);
+  });
+}
+
+function selectAnswer(type){
+  score[type]++;
+  index++;
+  if(index < quiz.length){
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult(){
+  updateProgress();
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("result").style.display="block";
+
+  let result = Object.keys(score).reduce((a,b)=>score[a]>score[b]?a:b);
+
+  const titles = {
+    dipladenia: "🌺 Você seria uma Dipladênia",
+    lirio: "🤍 Você seria um Lírio-da-paz",
+    zamioculca: "🌿 Você seria uma Zamioculca",
+    orquidea: "🌸 Você seria uma Orquídea"
+  };
+
+  const texts = {
+    dipladenia: "Perfil solar, gosta de muita luz, é resistente e cheia de presença.",
+    lirio: "Dramático com a rega: sente falta d’água, mas sofre com excesso.",
+    zamioculca: "Resistente, sem frescura e de baixa manutenção.",
+    orquidea: "Bonita e admirada por todos, mas seletiva."
+  };
+
+  document.getElementById("plantTitle").innerText = titles[result];
+  document.getElementById("plantText").innerText = texts[result];
+
+  const msg = encodeURIComponent(
+    "Oi! Fiz o quiz *Qual planta você seria?* 🌿 e meu resultado foi: " +
+    titles[result] +
+    ". Gostaria de saber valores e disponibilidade 😊"
+  );
+
+  document.getElementById("whatsLink").href =
+    "https://wa.me/" + WHATS_NUMBER + "?text=" + msg;
+}
+
+showQuestion();
+</script>
 
 </body>
 </html>
