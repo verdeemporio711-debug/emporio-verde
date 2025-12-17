@@ -1,101 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<title>Qual planta você seria?</title>
-<style>
-body{
-  font-family: Arial, Helvetica, sans-serif;
-  background:linear-gradient(135deg,#e8f5ee,#f4f7f4);
-  margin:0;
-  padding:0;
-}
-.container{
-  max-width:650px;
-  margin:40px auto;
-  background:#ffffff;
-  padding:30px;
-  border-radius:14px;
-  box-shadow:0 10px 25px rgba(0,0,0,.12);
-}
-h1{
-  text-align:center;
-  color:#2f6b4f;
-}
-.progress{
-  height:8px;
-  background:#e0e0e0;
-  border-radius:20px;
-  overflow:hidden;
-  margin:20px 0;
-}
-.progress-bar{
-  height:100%;
-  width:0%;
-  background:#2f6b4f;
-  transition:width .4s ease;
-}
-.answers button{
-  display:block;
-  width:100%;
-  margin:10px 0;
-  padding:14px;
-  border:none;
-  border-radius:10px;
-  background:#e6f2ec;
-  cursor:pointer;
-  font-size:16px;
-}
-.answers button:hover{
-  background:#cfe8dd;
-}
-#result{
-  display:none;
-  text-align:center;
-}
-.whatsapp{
-  display:inline-block;
-  margin-top:20px;
-  padding:14px 22px;
-  background:#25D366;
-  color:#ffffff;
-  text-decoration:none;
-  border-radius:30px;
-  font-weight:bold;
-}
-.footer{
-  margin-top:25px;
-  font-size:13px;
-  color:#777;
-}
-</style>
-</head>
-<body>
-
-<div class="container">
-  <h1>🌿 Qual planta você seria?</h1>
-
-  <div class="progress">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-
-  <div id="quiz">
-    <p id="questionText"></p>
-    <div class="answers" id="answers"></div>
-  </div>
-
-  <div id="result">
-    <h2 id="plantTitle"></h2>
-    <p id="plantText"></p>
-    <a class="whatsapp" id="whatsLink" href="#" target="_blank">
-      Quero adquirir 🌱
-    </a>
-    <div class="footer">
-      Espalhando o verde pelo Vale do Paraíba e Região desde 2004 🌿
-    </div>
-  </div>
-</div>
-
 <script>
 const WHATS_NUMBER = "5512997125241";
 
@@ -184,10 +86,10 @@ function showResult(){
   };
 
   const texts = {
-    dipladenia: "Perfil solar, gosta de muita luz, é resistente e cheia de presença.",
-    lirio: "Dramático com a rega: sente falta d’água, mas sofre com excesso.",
-    zamioculca: "Resistente, sem frescura e de baixa manutenção.",
-    orquidea: "Bonita e admirada por todos, mas seletiva."
+    dipladenia: "Você é pura energia e presença! 🌞 Assim como a dipladênia, você gosta de luz, de vida e de ambientes alegres. É uma pessoa que chama atenção naturalmente, transmite entusiasmo e deixa qualquer espaço mais bonito só de estar ali. Uma planta cheia de cor, força e personalidade — igual a você!",
+    lirio: "Você é sensível, intenso e muito verdadeiro 🤍 Como o lírio-da-paz, você sente tudo com profundidade e valoriza equilíbrio e cuidado. Quando está bem, ilumina o ambiente; quando algo não vai bem, percebe rápido. Uma planta delicada, elegante e cheia de significado — perfeita para quem sente o mundo de forma especial.",
+    zamioculca: "Você é prático, tranquilo e resistente 🌿 A zamioculca combina com quem gosta de simplicidade, estabilidade e zero drama. Você se adapta fácil, é confiável e forte, mesmo sem fazer alarde. Uma planta moderna, discreta e cheia de charme — assim como seu jeito de ser.",
+    orquidea: "Você é sofisticado, elegante e único 🌸 Como a orquídea, você chama atenção pela beleza e pelos detalhes. Valoriza qualidade, cuidado e tudo que tem significado. Pode até parecer exigente, mas é justamente isso que torna sua presença tão especial. Uma planta admirada, refinada e inesquecível — igual a você."
   };
 
   document.getElementById("plantTitle").innerText = titles[result];
@@ -205,6 +107,3 @@ function showResult(){
 
 showQuestion();
 </script>
-
-</body>
-</html>
