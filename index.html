@@ -1,27 +1,213 @@
-<script>
-  const results = {
-    suculenta: {
-      titulo: "🌱 Você é uma Suculenta!",
-      texto: "Você é prática, charmosa e cheia de personalidade! Sabe se adaptar a diferentes situações, valoriza a simplicidade e encontra beleza nos pequenos detalhes. Assim como as suculentas, você mostra que não é preciso muito para florescer — basta cuidado, luz e carinho 💚"
-    },
-    jiboia: {
-      titulo: "🌿 Você é uma Jiboia!",
-      texto: "Versátil, acolhedora e cheia de vida! Você se adapta com facilidade, cresce em qualquer ambiente e leva leveza por onde passa. Sua energia transforma os espaços e as pessoas ao seu redor 🌿✨"
-    },
-    orquidea: {
-      titulo: "🌸 Você é uma Orquídea!",
-      texto: "Elegante, sensível e única! Você valoriza os detalhes, gosta de ambientes harmoniosos e encanta naturalmente. Sua presença é marcante e especial, do jeitinho que só você sabe ser 🌸💖"
-    },
-    cacto: {
-      titulo: "🌵 Você é um Cacto!",
-      texto: "Forte, resiliente e cheio de atitude! Você enfrenta desafios com coragem e mostra que mesmo nos momentos difíceis é possível florescer. Por fora pode parecer discreta, mas por dentro é pura força 🌵✨"
-    }
-  };
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Qual planta você seria?</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  function mostrarResultado(tipo) {
-    document.getElementById("resultado-titulo").innerText = results[tipo].titulo;
-    document.getElementById("resultado-texto").innerText = results[tipo].texto;
-    document.getElementById("quiz").style.display = "none";
-    document.getElementById("resultado").style.display = "block";
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #eef6ee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+h1 {
+  color: #2e7d32;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#progress {
+  background: #ddd;
+  height: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+#progressBar {
+  height: 8px;
+  width: 0%;
+  background: #2e7d32;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #2e7d32;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #256628;
+}
+
+#result {
+  display: none;
+  text-align: center;
+}
+
+#plantTitle {
+  color: #2e7d32;
+  margin-bottom: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Qual planta você seria? 🌿</h1>
+
+  <div id="progress">
+    <div id="progressBar"></div>
+  </div>
+
+  <div id="quiz">
+    <h2 id="questionText"></h2>
+    <div id="answers"></div>
+  </div>
+
+  <div id="result">
+    <h2 id="plantTitle"></h2>
+    <p id="plantText"></p>
+    <a id="whatsLink" target="_blank">
+      <button>Falar com o Empório Verde 💚</button>
+    </a>
+  </div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+const WHATS_NUMBER = "5512997125241";
+
+const quiz = [
+  {
+    question: "Como você se descreve?",
+    answers: [
+      { text: "Cheio de energia e presença", type: "dipladenia" },
+      { text: "Sensível e intenso", type: "lirio" },
+      { text: "Tranquilo e prático", type: "zamioculca" },
+      { text: "Elegante e exigente", type: "orquidea" }
+    ]
+  },
+  {
+    question: "Qual ambiente combina mais com você?",
+    answers: [
+      { text: "Sol pleno e espaços abertos", type: "dipladenia" },
+      { text: "Bem iluminado, sem sol direto", type: "lirio" },
+      { text: "Luz indireta e pouca manutenção", type: "zamioculca" },
+      { text: "Iluminado e bem cuidado", type: "orquidea" }
+    ]
+  },
+  {
+    question: "Como você reage quando algo sai do controle?",
+    answers: [
+      { text: "Sigo firme e não desanimo", type: "dipladenia" },
+      { text: "Percebo rápido e demonstro", type: "lirio" },
+      { text: "Prefiro manter a calma", type: "zamioculca" },
+      { text: "Espero o momento certo", type: "orquidea" }
+    ]
   }
+];
+
+let index = 0;
+let score = { dipladenia:0, lirio:0, zamioculca:0, orquidea:0 };
+
+const resultados = {
+  dipladenia: {
+    titulo: "🌺 Você seria uma Dipladênia",
+    texto: "Você é pura energia e presença! 🌞 Assim como a dipladênia, você gosta de luz, de vida e de ambientes alegres. É uma pessoa que chama atenção naturalmente, transmite entusiasmo e deixa qualquer espaço mais bonito só de estar ali. Uma planta cheia de cor, força e personalidade — igual a você!"
+  },
+  lirio: {
+    titulo: "🤍 Você seria um Lírio-da-paz",
+    texto: "Você é sensível, intenso e muito verdadeiro 🤍 Como o lírio-da-paz, você sente tudo com profundidade e valoriza equilíbrio e cuidado. Quando está bem, ilumina o ambiente; quando algo não vai bem, percebe rápido. Uma planta delicada, elegante e cheia de significado — perfeita para quem sente o mundo de forma especial."
+  },
+  zamioculca: {
+    titulo: "🌿 Você seria uma Zamioculca",
+    texto: "Você é prático, tranquilo e resistente 🌿 A zamioculca combina com quem gosta de simplicidade, estabilidade e zero drama. Você se adapta fácil, é confiável e forte, mesmo sem fazer alarde. Uma planta moderna, discreta e cheia de charme — assim como seu jeito de ser."
+  },
+  orquidea: {
+    titulo: "🌸 Você seria uma Orquídea",
+    texto: "Você é sofisticado, elegante e único 🌸 Como a orquídea, você chama atenção pela beleza e pelos detalhes. Valoriza qualidade, cuidado e tudo que tem significado. Pode até parecer exigente, mas é justamente isso que torna sua presença tão especial. Uma planta admirada, refinada e inesquecível — igual a você."
+  }
+};
+
+function updateProgress() {
+  document.getElementById("progressBar").style.width =
+    (index / quiz.length) * 100 + "%";
+}
+
+function showQuestion() {
+  updateProgress();
+  document.getElementById("questionText").innerText = quiz[index].question;
+  const answersDiv = document.getElementById("answers");
+  answersDiv.innerHTML = "";
+
+  quiz[index].answers.forEach(a => {
+    const btn = document.createElement("button");
+    btn.innerText = a.text;
+    btn.onclick = () => selectAnswer(a.type);
+    answersDiv.appendChild(btn);
+  });
+}
+
+function selectAnswer(type) {
+  score[type]++;
+  index++;
+
+  if (index < quiz.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  let result = Object.keys(score).reduce((a,b)=> score[a] > score[b] ? a : b);
+
+  document.getElementById("plantTitle").innerText = resultados[result].titulo;
+  document.getElementById("plantText").innerText = resultados[result].texto;
+
+  const msg = encodeURIComponent(
+    "Oi! Fiz o quiz *Qual planta você seria?* 🌿 e meu resultado foi: " +
+    resultados[result].titulo +
+    ". Gostaria de saber valores e disponibilidade 😊"
+  );
+
+  document.getElementById("whatsLink").href =
+    "https://wa.me/" + WHATS_NUMBER + "?text=" + msg;
+}
+
+showQuestion();
+
+});
 </script>
+
+</body>
+</html>
