@@ -1,109 +1,27 @@
 <script>
-const WHATS_NUMBER = "5512997125241";
-
-const quiz = [
-  {
-    question: "Como você se descreve?",
-    answers: [
-      { text: "Cheio de energia e presença", type: "dipladenia" },
-      { text: "Sensível e intenso", type: "lirio" },
-      { text: "Tranquilo e prático", type: "zamioculca" },
-      { text: "Elegante e exigente", type: "orquidea" }
-    ]
-  },
-  {
-    question: "Qual ambiente combina mais com você?",
-    answers: [
-      { text: "Sol pleno e espaços abertos", type: "dipladenia" },
-      { text: "Bem iluminado, sem sol direto", type: "lirio" },
-      { text: "Luz indireta e pouca interferência", type: "zamioculca" },
-      { text: "Iluminado e bem cuidado", type: "orquidea" }
-    ]
-  },
-  {
-    question: "Como você reage quando algo sai do controle?",
-    answers: [
-      { text: "Sigo firme, sou resistente", type: "dipladenia" },
-      { text: "Demonstro logo o problema", type: "lirio" },
-      { text: "Prefiro não me estressar", type: "zamioculca" },
-      { text: "Espero o momento certo", type: "orquidea" }
-    ]
-  },
-  {
-    question: "Como você prefere ser lembrado?",
-    answers: [
-      { text: "Chamativo e florido", type: "dipladenia" },
-      { text: "Expressivo e sensível", type: "lirio" },
-      { text: "Discreto e resistente", type: "zamioculca" },
-      { text: "Bonito e sofisticado", type: "orquidea" }
-    ]
-  }
-];
-
-let index = 0;
-let score = { dipladenia:0, lirio:0, zamioculca:0, orquidea:0 };
-
-function updateProgress(){
-  document.getElementById("progressBar").style.width =
-    (index / quiz.length) * 100 + "%";
-}
-
-function showQuestion(){
-  updateProgress();
-  document.getElementById("questionText").innerText = quiz[index].question;
-  const answersDiv = document.getElementById("answers");
-  answersDiv.innerHTML = "";
-  quiz[index].answers.forEach(a=>{
-    const btn = document.createElement("button");
-    btn.innerText = a.text;
-    btn.onclick = ()=>selectAnswer(a.type);
-    answersDiv.appendChild(btn);
-  });
-}
-
-function selectAnswer(type){
-  score[type]++;
-  index++;
-  if(index < quiz.length){
-    showQuestion();
-  } else {
-    showResult();
-  }
-}
-
-function showResult(){
-  updateProgress();
-  document.getElementById("quiz").style.display="none";
-  document.getElementById("result").style.display="block";
-
-  let result = Object.keys(score).reduce((a,b)=>score[a]>score[b]?a:b);
-
-  const titles = {
-    dipladenia: "🌺 Você seria uma Dipladênia",
-    lirio: "🤍 Você seria um Lírio-da-paz",
-    zamioculca: "🌿 Você seria uma Zamioculca",
-    orquidea: "🌸 Você seria uma Orquídea"
+  const results = {
+    suculenta: {
+      titulo: "🌱 Você é uma Suculenta!",
+      texto: "Você é prática, charmosa e cheia de personalidade! Sabe se adaptar a diferentes situações, valoriza a simplicidade e encontra beleza nos pequenos detalhes. Assim como as suculentas, você mostra que não é preciso muito para florescer — basta cuidado, luz e carinho 💚"
+    },
+    jiboia: {
+      titulo: "🌿 Você é uma Jiboia!",
+      texto: "Versátil, acolhedora e cheia de vida! Você se adapta com facilidade, cresce em qualquer ambiente e leva leveza por onde passa. Sua energia transforma os espaços e as pessoas ao seu redor 🌿✨"
+    },
+    orquidea: {
+      titulo: "🌸 Você é uma Orquídea!",
+      texto: "Elegante, sensível e única! Você valoriza os detalhes, gosta de ambientes harmoniosos e encanta naturalmente. Sua presença é marcante e especial, do jeitinho que só você sabe ser 🌸💖"
+    },
+    cacto: {
+      titulo: "🌵 Você é um Cacto!",
+      texto: "Forte, resiliente e cheio de atitude! Você enfrenta desafios com coragem e mostra que mesmo nos momentos difíceis é possível florescer. Por fora pode parecer discreta, mas por dentro é pura força 🌵✨"
+    }
   };
 
-  const texts = {
-    dipladenia: "Você é pura energia e presença! 🌞 Assim como a dipladênia, você gosta de luz, de vida e de ambientes alegres. É uma pessoa que chama atenção naturalmente, transmite entusiasmo e deixa qualquer espaço mais bonito só de estar ali. Uma planta cheia de cor, força e personalidade — igual a você!",
-    lirio: "Você é sensível, intenso e muito verdadeiro 🤍 Como o lírio-da-paz, você sente tudo com profundidade e valoriza equilíbrio e cuidado. Quando está bem, ilumina o ambiente; quando algo não vai bem, percebe rápido. Uma planta delicada, elegante e cheia de significado — perfeita para quem sente o mundo de forma especial.",
-    zamioculca: "Você é prático, tranquilo e resistente 🌿 A zamioculca combina com quem gosta de simplicidade, estabilidade e zero drama. Você se adapta fácil, é confiável e forte, mesmo sem fazer alarde. Uma planta moderna, discreta e cheia de charme — assim como seu jeito de ser.",
-    orquidea: "Você é sofisticado, elegante e único 🌸 Como a orquídea, você chama atenção pela beleza e pelos detalhes. Valoriza qualidade, cuidado e tudo que tem significado. Pode até parecer exigente, mas é justamente isso que torna sua presença tão especial. Uma planta admirada, refinada e inesquecível — igual a você."
-  };
-
-  document.getElementById("plantTitle").innerText = titles[result];
-  document.getElementById("plantText").innerText = texts[result];
-
-  const msg = encodeURIComponent(
-    "Oi! Fiz o quiz *Qual planta você seria?* 🌿 e meu resultado foi: " +
-    titles[result] +
-    ". Gostaria de saber valores e disponibilidade 😊"
-  );
-
-  document.getElementById("whatsLink").href =
-    "https://wa.me/" + WHATS_NUMBER + "?text=" + msg;
-}
-
-showQuestion();
+  function mostrarResultado(tipo) {
+    document.getElementById("resultado-titulo").innerText = results[tipo].titulo;
+    document.getElementById("resultado-texto").innerText = results[tipo].texto;
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("resultado").style.display = "block";
+  }
 </script>
