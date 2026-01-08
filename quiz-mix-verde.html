@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>O que é, o que é? 🌿</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#eef6ee;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+.container{
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  max-width:420px;
+  width:100%;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+h1{
+  text-align:center;
+  color:#2f6b3c;
+}
+.item{
+  background:#f5f5f5;
+  padding:12px;
+  border-radius:8px;
+  margin-bottom:10px;
+}
+.resposta{
+  display:none;
+  margin-top:6px;
+  color:#2f6b3c;
+  font-weight:bold;
+}
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#2f6b3c;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+}
+button:hover{
+  background:#24532e;
+}
+footer{
+  text-align:center;
+  font-size:12px;
+  color:#666;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <h1>🌿 O que é, o que é? 🌿</h1>
+
+  <div class="item">1️⃣ Nasço pequena, viro planta e começo minha vida em um vasinho.
+    <div class="resposta">🌱 Muda</div>
+  </div>
+
+  <div class="item">2️⃣ Dou flores poucas vezes ao ano, sou muito usada para presente e posso viver até em árvores.
+    <div class="resposta">🌸 Orquídea</div>
+  </div>
+
+  <div class="item">3️⃣ Sou misturado à terra para deixar as plantas mais fortes e saudáveis.
+    <div class="resposta">🪴 Adubo</div>
+  </div>
+
+  <div class="item">4️⃣ Sem mim nenhuma planta sobrevive, mas em excesso posso causar problemas.
+    <div class="resposta">💧 Água</div>
+  </div>
+
+  <div class="item">5️⃣ Sou fonte de energia para as plantas, participo da fotossíntese e ajudo no crescimento.
+    <div class="resposta">☀️ Sol</div>
+  </div>
+
+  <div class="item">6️⃣ Posso ser usada para temperar comidas ou fazer chás.
+    <div class="resposta">🌿 Ervas</div>
+  </div>
+
+  <div class="item">7️⃣ Sou uma manta usada no solo para drenagem e proteção das raízes.
+    <div class="resposta">🧵 Manta Bidim</div>
+  </div>
+
+  <button onclick="mostrarRespostas()">Ver respostas</button>
+
+  <footer>
+    Empório Verde 🌱 | Espalhando o verde desde 2004
+  </footer>
+</div>
+
+<script>
+function mostrarRespostas(){
+  const respostas = document.querySelectorAll('.resposta');
+  respostas.forEach(r => r.style.display = 'block');
+}
+</script>
+
+</body>
+</html>
