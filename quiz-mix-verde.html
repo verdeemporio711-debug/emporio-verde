@@ -15,33 +15,20 @@ body{
   align-items:center;
   min-height:100vh;
 }
-.container{
+.box{
   background:#fff;
   padding:20px;
-  border-radius:12px;
+  border-radius:14px;
   max-width:420px;
   width:100%;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-}
-h1{
   text-align:center;
-  color:#2f6b3c;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
 }
-.item{
-  background:#f5f5f5;
-  padding:12px;
-  border-radius:8px;
-  margin-bottom:10px;
-}
-.resposta{
-  display:none;
-  margin-top:6px;
-  color:#2f6b3c;
-  font-weight:bold;
-}
+h1,h2{color:#2f6b3c;}
 button{
   width:100%;
   padding:12px;
+  margin-top:10px;
   border:none;
   border-radius:8px;
   background:#2f6b3c;
@@ -49,62 +36,99 @@ button{
   font-size:16px;
   cursor:pointer;
 }
-button:hover{
-  background:#24532e;
+button.sec{
+  background:#888;
 }
-footer{
-  text-align:center;
+.resposta{
+  display:none;
+  margin-top:10px;
+  font-weight:bold;
+  color:#2f6b3c;
+}
+.footer{
   font-size:12px;
   color:#666;
-  margin-top:10px;
+  margin-top:12px;
 }
 </style>
 </head>
 
 <body>
-<div class="container">
-  <h1>🌿 O que é, o que é? 🌿</h1>
 
-  <div class="item">1️⃣ Nasço pequena, viro planta e começo minha vida em um vasinho.
-    <div class="resposta">🌱 Muda</div>
-  </div>
-
-  <div class="item">2️⃣ Dou flores poucas vezes ao ano, sou muito usada para presente e posso viver até em árvores.
-    <div class="resposta">🌸 Orquídea</div>
-  </div>
-
-  <div class="item">3️⃣ Sou misturado à terra para deixar as plantas mais fortes e saudáveis.
-    <div class="resposta">🪴 Adubo</div>
-  </div>
-
-  <div class="item">4️⃣ Sem mim nenhuma planta sobrevive, mas em excesso posso causar problemas.
-    <div class="resposta">💧 Água</div>
-  </div>
-
-  <div class="item">5️⃣ Sou fonte de energia para as plantas, participo da fotossíntese e ajudo no crescimento.
-    <div class="resposta">☀️ Sol</div>
-  </div>
-
-  <div class="item">6️⃣ Posso ser usada para temperar comidas ou fazer chás.
-    <div class="resposta">🌿 Ervas</div>
-  </div>
-
-  <div class="item">7️⃣ Sou uma manta usada no solo para drenagem e proteção das raízes.
-    <div class="resposta">🧵 Manta Bidim</div>
-  </div>
-
-  <button onclick="mostrarRespostas()">Ver respostas</button>
-
-  <footer>
-    Empório Verde 🌱 | Espalhando o verde desde 2004
-  </footer>
-</div>
+<div class="box" id="app"></div>
 
 <script>
-function mostrarRespostas(){
-  const respostas = document.querySelectorAll('.resposta');
-  respostas.forEach(r => r.style.display = 'block');
+const telas = [
+  {
+    titulo: "🌿 O que é, o que é?",
+    texto: "É uma plantinha jovem, recém-cultivada, pronta para ser transplantada.",
+    resposta: "Muda 🌱"
+  },
+  {
+    titulo: "🌿 O que é, o que é?",
+    texto: "Dá flor poucas vezes ao ano, é muito usada para presente e pode viver até em árvores.",
+    resposta: "Orquídea 🌸"
+  },
+  {
+    titulo: "🌿 O que é, o que é?",
+    texto: "Ajuda no crescimento saudável, fortalece raízes, folhas e flores.",
+    resposta: "Adubo 🪴"
+  },
+  {
+    titulo: "🌿 O que é, o que é?",
+    texto: "É essencial para a vida da planta, mas em excesso pode causar apodrecimento.",
+    resposta: "Água 💧"
+  },
+  {
+    titulo: "🌿 O que é, o que é?",
+    texto: "Fonte de energia da planta, essencial para a fotossíntese.",
+    resposta: "Sol ☀️"
+  },
+  {
+    titulo: "🌿 O que é, o que é?",
+    texto: "Usadas na culinária, chás e temperos, além de perfumar o ambiente.",
+    resposta: "Ervas aromáticas 🌿"
+  },
+  {
+    titulo: "🌿 O que é, o que é?",
+    texto: "Manta usada no fundo do vaso para drenagem e proteção das raízes.",
+    resposta: "Manta Bidim 🧵"
+  }
+];
+
+let atual = -1;
+
+function menu(){
+  document.getElementById("app").innerHTML = `
+    <h1>🌿 O que é, o que é?</h1>
+    <p>Clique para começar 👇</p>
+    <button onclick="abrir(0)">Iniciar 🌱</button>
+    <div class="footer">Empório Verde | Desde 2004</div>
+  `;
 }
+
+function abrir(i){
+  atual = i;
+  const t = telas[i];
+  document.getElementById("app").innerHTML = `
+    <h2>${t.titulo}</h2>
+    <p>${t.texto}</p>
+
+    <button onclick="verResposta()">Ver resposta</button>
+    <div class="resposta" id="resp">${t.resposta}</div>
+
+    ${i > 0 ? `<button class="sec" onclick="abrir(${i-1})">⬅️ Voltar</button>` : ``}
+    ${i < telas.length-1 ? `<button onclick="abrir(${i+1})">➡️ Próxima</button>` : `<button onclick="menu()">🏁 Finalizar</button>`}
+
+    <button class="sec" onclick="menu()">🏠 Menu</button>
+  `;
+}
+
+function verResposta(){
+  document.getElementById("resp").style.display = "block";
+}
+
+menu();
 </script>
 
 </body>
